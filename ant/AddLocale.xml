@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jan 26, 2011 10:09:17 AM                                                        
+
+     Add a locale to the flex framework    
+     Add a locale for the inegrated FlexUnit 
+                   
+     rbokel                                                                
+     ====================================================================== -->
+<project name="AddLocale" default="default" basedir="..">
+
+	<property name="PROJECT_FRAMEWORKS" location="D:\apps\flex_sdk_4.1.0.16076" />
+	<property name="PROJECT_LOCALE" value="xy_XY" />
+
+	<property name="FLEX_PLUGINS" location="D:\apps\Adobe Flash Builder 4 Plug-in\eclipse\plugins\" />
+	<property name="FLEX_UNIT_EN_US_LOCALE" location="${FLEX_PLUGINS}\com.adobe.flexbuilder.flexunit_4.0.0.272416" />
+	<property name="FLEX_UNIT_OTHER_LOCALES" location="${FLEX_PLUGINS}\com.adobe.flexbuilder.flexunit.nl1_4.0.0.272416" />
+	<property name="FLEX_UNIT_LOCALE" value="xy_XY" />
+
+	<target name="default">
+		<echo>choose addFrameworkLocale or addFlexUnitLocale</echo>
+	</target>
+
+	<target name="addFrameworkLocale">
+		<echo>framework ${PROJECT_FRAMEWORKS}</echo>
+		<echo>locales ${PROJECT_LOCALE}</echo>
+		<exec executable="${PROJECT_FRAMEWORKS}/bin/copylocale.exe">
+			<arg value="en_US" />
+			<arg value="${PROJECT_LOCALE}" />
+		</exec>
+	</target>
+
+	<target name="addFlexUnitLocale">
+		<echo>source dir ${FLEX_UNIT_EN_US_LOCALE}</echo>
+		<echo>target dir ${FLEX_UNIT_OTHER_LOCALES}</echo>
+		<echo>locale ${FLEX_UNIT_LOCALE}</echo>
+
+		<property name="FLEX_UNIT_LOCALE_TARGET_DIR" value="${FLEX_UNIT_OTHER_LOCALES}/nl/${FLEX_UNIT_LOCALE}/flexunitframework/locale" />
+
+		<copy todir="${FLEX_UNIT_LOCALE_TARGET_DIR}" overwrite="true">
+			<fileset dir="${FLEX_UNIT_EN_US_LOCALE}/flexunitframework/locale" />
+		</copy>
+
+		<recompile dir="${FLEX_UNIT_LOCALE_TARGET_DIR}/version3locale"/>
+		<recompile dir="${FLEX_UNIT_LOCALE_TARGET_DIR}/version4locale"/>
+	</target>
+
+	<macrodef name="recompile">
+		<attribute name="dir" />
+
+		<sequential>
+			<unzip src="@{dir}/FlexUnitTestRunner_rb.swc" dest="@{dir}/tmp" overwrite="true"/>
+			<move todir="@{dir}/tmp/locale/${FLEX_UNIT_LOCALE}">
+				<fileset dir="@{dir}/tmp/locale/en_US"/>
+			</move>
+			<exec executable="${PROJECT_FRAMEWORKS}/bin/compc.exe">
+				<arg value="-locale=${FLEX_UNIT_LOCALE}" />
+				<arg value="-source-path=@{dir}/tmp/locale/{locale}" />
+				<arg value="-include-resource-bundles=FlexUnitTestRunner" />
+				<arg value="-output=@{dir}/FlexUnitTestRunner_rb.swc" />
+			</exec>
+			<delete dir="@{dir}/tmp" />
+		</sequential>
+	</macrodef>
+
+</project>
