@@ -5,7 +5,7 @@
      Add a locale to the flex framework    
      Add a locale for the integrated FlexUnit 
                    
-     (c) 2011 ralf.bokelberg.git@qlod.org  
+     (c) 2011 ralf.bokelberg.github@qlod.org  
      ====================================================================== -->
 <project name="AddLocale" default="default" basedir="..">
 

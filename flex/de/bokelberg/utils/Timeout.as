@@ -6,6 +6,8 @@ package de.bokelberg.utils
 	/**
 	 * A fluent factory class which wraps calls to setTimeout into a nicer interface
 	 * @example Timeout.wait(1000).beforeCalling(triggerReading).withParameter(event.callback).start();
+	 * 
+	 * (c) 2011 ralf.bokelberg.github@qlod.org
 	 */
 	public class Timeout
 	{

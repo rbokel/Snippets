@@ -10,6 +10,8 @@ package de.bokelberg.utils
 	 * @Example
 	 * var ac : ArrayCollection = new ArrayCollection();
 	 * ac.sort = new SortBuilder().byField("name").asString().caseInsensitive().build();
+	 * 
+	 * (c) 2011 ralf.bokelberg.github@qlod.org
 	 */
 	public class SortBuilder
 	{
