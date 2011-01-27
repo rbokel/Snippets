@@ -5,7 +5,7 @@ package de.bokelberg.utils
 
 	/**
 	 * A fluent factory class which wraps calls to setTimeout into a nicer interface
-	 * @example Timeout.wait(1000).beforeCalling(triggerReading).withParameter(event.callback).start();
+	 * @example Timeout.wait(1000).andCall(someMethod).withParameter(someParameter).afterwards();
 	 * 
 	 * (c) 2011 ralf.bokelberg.github@qlod.org
 	 */
@@ -88,6 +88,31 @@ package de.bokelberg.utils
 		{
 			parameters.push(parameter);
 			return this;
+		}
+		
+		public function withStringParameter(parameter:String):Timeout
+		{
+			return withParameter( parameter );
+		}
+		
+		public function withNumberParameter(parameter:Number):Timeout
+		{
+			return withParameter( parameter );
+		}
+		
+		public function withBooleanParameter(parameter:Boolean):Timeout
+		{
+			return withParameter( parameter );
+		}
+		
+		public function withFunctionParameter(parameter:Function):Timeout
+		{
+			return withParameter( parameter );
+		}
+		
+		public function withObjectParameter(parameter:Object):Timeout
+		{
+			return withParameter( parameter );
 		}
 	}
 }
